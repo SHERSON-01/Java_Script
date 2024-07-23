@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container{
+            margin: auto;
+            margin-top: 30px;
+            border: 5px solid black;
+            height: 40vh;
+            width: 40vw;
+            overflow: scroll;
+            
+
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="bx">
+        <div class="txt" id="tt">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis necessitatibus temporibus illo facere quae amet tempora aperiam impedit voluptate fugiat eligendi ut corrupti corporis blanditiis, quibusdam quo eaque? Saepe, explicabo?</p>
+        </div>
+        <button id="btnupr">Uppercase</button>
+        <button id="btnlwr">Lowercase</button>
+        <button id="btn+">+</button>
+        <button id="btn-">-</button>
+        <input type="color" id="color">
+    </div>
+
+
+    <script>
+        let counter = 10;
+
+        document.getElementById("btnupr").onclick = function(){
+                document.getElementById("tt").style.textTransform="uppercase";
+        }
+        document.getElementById("btnlwr").onclick = function(){
+                document.getElementById("tt").style.textTransform="lowercase";
+        }
+        document.getElementById("btn+").onclick = function(){
+                document.getElementById("tt").style.fontSize=counter+"px";
+                counter++;
+        }
+        document.getElementById("btn-").onclick = function(){
+                document.getElementById("tt").style.fontSize=counter+"px";
+                counter--;
+        }
+        document.getElementById("color").oninput = function(){
+                let color = document.getElementById("color").value;
+                console.log(color)
+                document.getElementById("bx").style.backgroundColor = color;
+        }
+
+    </script>
+</body>
+</html>

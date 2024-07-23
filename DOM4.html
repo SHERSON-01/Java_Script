@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+        }
+        .input{
+            font-size: 40px;
+            font-weight: 200;
+        }
+        #inp{
+            font-size: 30px;
+            font-weight: 200;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="input">
+        <input type="text" class="inp" id="inp" placeholder="First Name">
+        <input type="text" class="inp" id="inp" placeholder="Email">
+        <input type="text" class="inp" id="inp" placeholder="Mobile No.">
+        <input type="text" class="inp" id="inp" placeholder="Age">
+        <input type="text" class="inp" id="inp" placeholder="Pincode">
+        <input type="text" class="inp" id="inp" placeholder="city">
+        <button id="btn">Submit</button>
+    </div>
+    <script>
+        // document.getElementById("btn").onclick = function(){
+        //     let val = document.getElementById("inp").value;
+        //     document.getElementById("inp").value = '';
+        //     document.getElementById("inp").focus();
+        //     console.log(val);
+        // }
+        // document.getElementById("btn").onclick = function(){
+        //     let val = document.getElementsByClassName("inp");
+        //     // for(let i=0; i<val.length)
+        //     for(let i of val){
+        //         console.log(i.value)
+        //     }
+        // }
+        document.querySelector("button").onclick = function(){
+            let a = document.querySelectorAll("input");
+            for(let i of a){
+                console.log(i.value)
+            }
+        }
+    </script>
+</body>
+</html>
