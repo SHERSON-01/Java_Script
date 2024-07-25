@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+        }
+        .container{
+            width: 400px;
+            height: 300px;
+            border: 2px solid black;
+            margin: 100px auto 0;
+            text-align: center;
+            background-color: black;
+        }
+        h1{
+            margin-top: 100px;
+            font-size: 65px;
+            color: white;
+        }
+        button{
+            font-size: 30px;
+            margin: 0 20px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+        <div class="container">
+            <h1 id="time">00:00:00</h1>
+            <div class="icons">
+                <button id="play"><i class="fa-solid fa-stop"></i></button>
+                <button id="pause"><i class="fa-solid fa-play"></i></button>
+                <button id="reset"><i class="fa-solid fa-rotate-left"></i></button>
+            </div>
+        </div>    
+
+
+        <script>
+        let [seconds, minutes, hours] = [0, 0, 0];
+        let displayTime = document.getElementById("time");
+        let timer = null;
+
+        function updateDisplay() {
+            let h = hours < 10 ? "0" + hours : hours;
+            let m = minutes < 10 ? "0" + minutes : minutes;
+            let s = seconds < 10 ? "0" + seconds : seconds;
+            displayTime.innerText = `${h}:${m}:${s}`;
+        }
+
+        function stopwatch() {
+            seconds++;
+            if (seconds == 60) {
+                seconds = 0;
+                minutes++;
+                if (minutes == 60) {
+                    minutes = 0;
+                    hours++;
+                }
+            }
+            updateDisplay();
+        }
+
+        function start() {
+            if (timer !== null) {
+                clearInterval(timer);
+            }
+            timer = setInterval(stopwatch, 1000);
+        }
+
+        function pause() {
+            clearInterval(timer);
+        }
+
+        function reset() {
+            clearInterval(timer);
+            [seconds, minutes, hours] = [0, 0, 0];
+            updateDisplay();
+        }
+
+        document.getElementById("play").addEventListener("click", start);
+        document.getElementById("pause").addEventListener("click", pause);
+        document.getElementById("reset").addEventListener("click", reset);
+
+        // Initialize display
+        updateDisplay();
+        </script>
+</body>
+</html>
