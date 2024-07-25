@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        const complexData = [
+            {
+                id: 1,
+                name: "John Doe",
+                age: 30,
+                address: {
+                    street: "123 Main St",
+                    city: "Anytown",
+                    country: "USA",
+                },
+                orders: [
+                    { orderId: "A123", amount: 50.75, status: "completed" },
+                    { orderId: "B456", amount: 30.25, status: "pending" },
+                ],
+            },
+            {
+                id: 2,
+                name: "Jane Smith",
+                age: 25,
+                address: {
+                    street: "456 Oak St",
+                    city: "Othercity",
+                    country: "USA",
+                },
+                orders: [
+                    { orderId: "C789", amount: 100.5, status: "completed" },
+                    { orderId: "D012", amount: 75.2, status: "completed" },
+                ],
+            },
+        ]
+
+        // console.log(complexData.flat(2));
+        // let b = complexData.filter(user => user.age<=25);
+        // let b = complexData.map(user => user.name)
+        // let b = complexData.flatMap(user => user.orders).filter(user=>user.amount>50)
+        // let b = complexData.flatMap(user => user.orders).map(orders => orders.orderId)
+        // let b = complexData.flatMap(user => user.orders).map(orders => orders.status === "pending")
+        // let b = complexData.flatMap(user => user.orders).map(user =>)
+        // let b = complexData.flatMap(user => user.orders).filter(orders => orders.amount>=30 && orders.amount<=70)
+        // let b = complexData.map(user => {const id = user.orders.filter(orders => orders.status==="completed").map(orders => orders.orderId);
+        //     return{name: user.name, id};
+        // });
+        console.log(b)
+    </script>
+</body>
+
+</html>
