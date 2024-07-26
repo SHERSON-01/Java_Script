@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .slider{
+            height: 400px;
+            width: 1000px;
+            margin: auto;
+            margin-top: 40px;
+            border: 1px solid black;
+            position: relative;
+        }
+        .button{
+            text-align: center;
+        }
+        button{
+            font-size: 30px;
+            margin: 20px 20px ;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slider">
+        <img src="https://picsum.photos/id/237/1000/400" alt="">
+        <img src="https://picsum.photos/id/238/1000/400" alt="">
+        <img src="https://picsum.photos/id/239/1000/400" alt="">
+        <img src="https://picsum.photos/id/240/1000/400" alt="">
+        <img src="https://picsum.photos/id/241/1000/400" alt="">
+    </div>
+    <div class="button">
+        <button><</button>
+        <button>></button>
+    </div>
+
+
+    <script>
+        const slides = document.querySelector(".slider");
+        var counter = 0;
+        slides.forEach((slider,index) => {
+            slider.style.left = `${index*100}%`
+        }
+    )
+    </script>
+</body>
+</html>
