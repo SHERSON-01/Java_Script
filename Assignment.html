@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            margin: 30px 30px;
+        }
+        input{
+            font-size: 15px;
+            padding: 3px;
+            border-radius: 10px;
+            border: 1px solid gray;
+        }
+        label{
+            font-size: 15px;
+        }
+        .dropdown , select, option{
+            font-size: 15px;
+        }
+        select{
+            background-color: rgb(209, 209, 209);
+            margin-top: 10px;
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid gray;
+        }
+        button{
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid gray;
+            margin-top: 10px;
+            background-color: coral;
+        }
+    </style>
+</head>
+<body>
+    
+<div class="container">
+    <input type="text" placeholder="Enter your Name"><br>
+    <br>
+    <input type="text" placeholder="Enter your Age"><br>
+    <br>
+    <input type="text" placeholder="Enter your Phone no."><br>
+    <br>
+    <input type="text" placeholder="Enter your Email"><br>
+    <br>
+    <input type="radio" id="male"><label for="male">Male</label>
+    <input type="radio"><label for="male">Female</label>
+    <input type="radio"><label for="male">Other</label>
+    <div class="dropdown">
+        <select name="City" id="citysel">
+            <option value="" disabled selected>Select Hometown</option>
+            <option value="Jaipur">Jaipur</option>
+            <option value="Jaipur">Ajmer</option>
+            <option value="Jaipur">Udaipur</option>
+            <option value="Jaipur">Jodhpur</option>
+            <option value="Jaipur">Jaisalmer</option>
+        </select>
+    </div>
+    <button>Submit</button>
+</div>
+
+
+
+
+<script>
+   const form = document.querySelector('.container');
+const table = document.createElement('table');
+const tbody = document.createElement('tbody');
+table.appendChild(tbody);
+form.appendChild(table);
+
+const nameInput = form.querySelector('input[placeholder="Enter your Name"]');
+const ageInput = form.querySelector('input[placeholder="Enter your Age"]');
+const phoneInput = form.querySelector('input[placeholder="Enter your Phone no. "]');
+const emailInput = form.querySelector('input[placeholder="Enter your Email"]');
+const maleRadio = form.querySelector('#male');
+const femaleRadio = form.querySelectorAll('input[type="radio"]')[1];
+const otherRadio = form.querySelectorAll('input[type="radio"]')[2];
+const citySelect = form.querySelector('#citysel');
+const submitButton = form.querySelector('button');
+
+let editIndex = -1;
+let dataArray = [];
+
+submitButton.addEventListener('click', () => {
+  const name = nameInput.value;
+  const age = ageInput.value;
+  const phone = phoneInput.value;
+  const email = emailInput.value;
+  const gender = maleRadio.checked ? 'Male' : femaleRadio.checked ? 'Female' : 'Other';
+  const city = citySelect.value;
+
+  if (editIndex === -1) {
+    dataArray.push({
+      name,
+      age,
+      phone,
+      email,
+      gender,
+      city
+    });
+  } else {
+    dataArray[editIndex] = {
+      name,
+      age,
+      phone,
+      email,
+      gender,
+      city
+    };
+    editIndex = -1;
+  }
+
+  renderTable();
+  clearForm();
+});
+
+function renderTable() {
+  tbody.innerHTML = '';
+  dataArray.forEach((data, index) => {
+    const row = document.createElement('tr');
+    const nameCell = document.createElement('td');
+    const ageCell = document.createElement('td');
+    const phoneCell = document.createElement('td');
+    const emailCell = document.createElement('td');
+    const genderCell = document.createElement('td');
+    const cityCell = document.createElement('td');
+    const editCell = document.createElement('td');
+    const deleteCell = document.createElement('td');
+
+    nameCell.textContent = data.name;
+    ageCell.textContent = data.age;
+    phoneCell.textContent = data.phone;
+    emailCell.textContent = data.email;
+    genderCell.textContent = data.gender;
+    cityCell.textContent = data.city;
+
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.addEventListener('click', () => {
+      editIndex = index;
+      nameInput.value = data.name;
+      ageInput.value = data.age;
+      phoneInput.value = data.phone;
+      emailInput.value = data.email;
+      if (data.gender === 'Male') {
+        maleRadio.checked = true;
+      } else if (data.gender === 'Female') {
+        femaleRadio.checked = true;
+      } else {
+        otherRadio.checked = true;
+      }
+      citySelect.value = data.city;
+    });
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', () => {
+      dataArray.splice(index, 1);
+      renderTable();
+    });
+
+    editCell.appendChild(editButton);
+    deleteCell.appendChild(deleteButton);
+
+    row.appendChild(nameCell);
+    row.appendChild(ageCell);
+    row.appendChild(phoneCell);
+    row.appendChild(emailCell);
+    row.appendChild(genderCell);
+    row.appendChild(cityCell);
+    row.appendChild(editCell);
+    row.appendChild(deleteCell);
+
+    tbody.appendChild(row);
+  });
+}
+
+function clearForm() {
+  nameInput.value = '';
+  ageInput.value = '';
+  phoneInput.value = '';
+  emailInput.value = '';
+  maleRadio.checked = false;
+  femaleRadio.checked = false;
+  otherRadio.checked = false;
+  citySelect.value = '';
+}
+
+// Add table headers
+const headerRow = document.createElement('tr');
+const headers = ['Name', 'Age', 'Phone', 'Email', 'Gender', 'City', 'Edit', 'Delete'];
+headers.forEach((header) => {
+  const headerCell = document.createElement('th');
+  headerCell.textContent = header;
+  headerRow.appendChild(headerCell);
+});
+tbody.insertBefore(headerRow, tbody.firstChild);
+</script>
+</body>
+</html>

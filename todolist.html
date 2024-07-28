@@ -1,0 +1,88 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h2>My ToDo List</h2>
+        <input type="text" id="input"><button id="btn">ADD</button>
+
+    </div>
+
+
+    <script>
+        let enter = document.querySelector("#input").value;
+        let btn = document.querySelector("#btn");
+        btn.addEventListener("click")
+
+        function Mention(){
+        }
+    </script>
+
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My ToDo List</title>
+    <style>
+        .completed {
+            text-decoration: line-through;
+        }
+        .task-item {
+            display: flex;
+            align-items: center;
+        }
+        .task-item button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>My ToDo List</h2>
+        <input type="text" id="input" placeholder="Enter a new task">
+        <button id="btn">ADD</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        let btn = document.querySelector("#btn");
+
+        btn.addEventListener("click", function() {
+            let enter = document.querySelector("#input").value.trim();
+
+            if (enter !== "") {
+                let taskList = document.querySelector("#taskList");
+
+                let listItem = document.createElement('li');
+                listItem.classList.add('task-item');
+                listItem.textContent = enter;
+
+                let completeButton = document.createElement('button');
+                completeButton.textContent = 'Complete';
+                completeButton.addEventListener("click", function() {
+                    listItem.classList.toggle('completed');
+                });
+
+                let deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Delete';
+                deleteButton.addEventListener("click", function() {
+                    taskList.removeChild(listItem);
+                });
+
+                listItem.appendChild(completeButton);
+                listItem.appendChild(deleteButton);
+                taskList.appendChild(listItem);
+
+                document.querySelector("#input").value = '';
+            }
+        });
+    </script>
+</body>
+</html>

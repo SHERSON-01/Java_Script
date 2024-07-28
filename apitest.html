@@ -61,8 +61,6 @@
           let data = await fetch('https://dummyjson.com/products');
           let json_data = await data.json();
 
-          let filter_product = json_data.products.filter
-
           for(let i of json_data.products){
             
             let div = document.createElement('div');
@@ -96,7 +94,6 @@
      }
 
      FetchData()
-     let b = 
     </script>
     
 </body>

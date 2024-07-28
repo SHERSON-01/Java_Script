@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 30px 30px;
+        }
+
+        input {
+            font-size: 15px;
+            padding: 3px;
+            border-radius: 10px;
+            border: 1px solid gray;
+        }
+
+        label {
+            font-size: 15px;
+        }
+
+        .dropdown,
+        select,
+        option {
+            font-size: 15px;
+        }
+
+        select {
+            background-color: rgb(209, 209, 209);
+            margin-top: 10px;
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid gray;
+        }
+
+        button {
+            width: 200px;
+            height: 30px;
+            border-radius: 10px;
+            border: 1px solid gray;
+            margin-top: 10px;
+            background-color: coral;
+        }
+
+        .table-container {
+            margin: 30px;
+        }
+
+        table {
+            width: 60%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .actions button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .actions .edit {
+            color: blue;
+            font-size: 10px;
+        }
+
+        .actions .delete {
+            color: blue;
+            font-size: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <input type="text" placeholder="Enter your Name"><br>
+        <br>
+        <input type="text" placeholder="Enter your Age"><br>
+        <br>
+        <input type="text" placeholder="Enter your Phone no."><br>
+        <br>
+        <input type="text" placeholder="Enter your Email"><br>
+        <br>
+        <input type="radio" id="male" name="gender"><label for="male">Male</label>
+        <input type="radio" id="female" name="gender"><label for="female">Female</label>
+        <input type="radio" id="other" name="gender"><label for="other">Other</label>
+        <div class="dropdown">
+            <select name="City" id="citysel">
+                <option value="" disabled selected>Select Hometown</option>
+                <option value="Jaipur">Jaipur</option>
+                <option value="Ajmer">Ajmer</option>
+                <option value="Udaipur">Udaipur</option>
+                <option value="Jodhpur">Jodhpur</option>
+                <option value="Jaisalmer">Jaisalmer</option>
+            </select>
+        </div>
+        <button>Submit</button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Gender</th>
+                    <th>Hometown</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('.container');
+        const tableBody = document.querySelector('tbody');
+
+        const nameInput = form.querySelector('input[placeholder="Enter your Name"]');
+        const ageInput = form.querySelector('input[placeholder="Enter your Age"]');
+        const phoneInput = form.querySelector('input[placeholder="Enter your Phone no."]');
+        const emailInput = form.querySelector('input[placeholder="Enter your Email"]');
+        const genderInputs = form.querySelectorAll('input[name="gender"]');
+        const citySelect = form.querySelector('#citysel');
+        const submitButton = form.querySelector('button');
+
+        let editIndex = -1;
+        let dataArray = [];
+
+        submitButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const name = nameInput.value;
+            const age = ageInput.value;
+            const phone = phoneInput.value;
+            const email = emailInput.value;
+            const gender = getSelectedGender();
+            const city = citySelect.value;
+
+            if (name && age && phone && email && city) {
+                if (editIndex === -1) {
+                    dataArray.push({
+                        name,
+                        age,
+                        phone,
+                        email,
+                        gender,
+                        city
+                    });
+                } else {
+                    dataArray[editIndex] = {
+                        name,
+                        age,
+                        phone,
+                        email,
+                        gender,
+                        city
+                    };
+                    editIndex = -1;
+                }
+
+                renderTable();
+                resetForm();
+            }
+        });
+
+        tableBody.addEventListener('click', (e) => {
+            if (e.target.classList.contains('edit')) {
+                const rowIndex = e.target.parentNode.parentNode.rowIndex - 1;
+                editIndex = rowIndex;
+                const data = dataArray[rowIndex];
+                nameInput.value = data.name;
+                ageInput.value = data.age;
+                phoneInput.value = data.phone;
+                emailInput.value = data.email;
+                for (const input of genderInputs) {
+                    if (input.nextElementSibling.innerText === data.gender) {
+                        input.checked = true;
+                    }
+                }
+                citySelect.value = data.city;
+            } else if (e.target.classList.contains('delete')) {
+                const rowIndex = e.target.parentNode.parentNode.rowIndex - 1;
+                dataArray.splice(rowIndex, 1);
+                renderTable();
+            }
+        });
+
+        function resetForm() {
+            nameInput.value = '';
+            ageInput.value = '';
+            phoneInput.value = '';
+            emailInput.value = '';
+            genderInputs.forEach(input => input.checked = false);
+            citySelect.value = '';
+        }
+
+        function getSelectedGender() {
+            for (const input of genderInputs) {
+                if (input.checked) {
+                    return input.nextElementSibling.innerText;
+                }
+            }
+            return '';
+        }
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+            dataArray.forEach((data, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${data.name}</td>
+                    <td>${data.age}</td>
+                    <td>${data.phone}</td>
+                    <td>${data.email}</td>
+                    <td>${data.gender}</td>
+                    <td>${data.city}</td>
+                    <td class="actions">
+                        <button class="edit"><i class="fa-solid fa-pen"></i></button>
+                        <button class="delete"><i class="fa-regular fa-trash-can"></i></button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

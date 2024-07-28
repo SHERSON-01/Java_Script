@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+<script>
+        let obj1={
+            console.log("hello i am function")
+        };
+    let obj2={
+        show(){
+            console.log("hello i am show function")
+        }
+    };
+    console.log(obj1)
+    obj1._proto_ = obj2;
+    obj1.output()
+    obj1.show();
+</script>
+
+</body>
+</html>
